@@ -5,16 +5,16 @@ import java.util.List;
 import repository.modelo.Cliente;
 
 public interface IClienteRepo {
-    public Cliente buscarPorId(Long id);
+    void insertar(Cliente cliente);
 
-    public List<Cliente> buscarTodos();
+    Cliente buscarPorCedula(String cedula);
 
-    public void actualizarporId(Cliente cliente);
+    List<Cliente> buscarPorNombre(String nombre);
 
-    public void actualizarParcialPorId(Cliente cliente);
+    List<Cliente> buscarTodos();
 
-    public void eliminarPorId(Long id);
+    void actualizar(Cliente cliente);
 
-    public void insertar(Cliente cliente);
+    void eliminar(Cliente cliente);
 
 }

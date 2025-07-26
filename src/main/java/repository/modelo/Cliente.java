@@ -2,8 +2,10 @@ package repository.modelo;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,29 +17,47 @@ import jakarta.persistence.Table;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "clien_nombre")
-    String nombre;
-    @Column(name = "clien_apellido")
-    String apellido;
-    @Column(name = "clien_razon_social")
-    String razonSocial;
-    @Column(name = "clien_direccion")
-    String direccion;
-    @Column(name = "clien_telefono")
-    String telefono;
-    @Column(name = "clien_email")
-    String email;
+    @Column(name = "clien_id")
+    private Integer id;
 
-    @OneToMany(mappedBy = "cliente")
-    List<Factura> facturas;
+    @Column(name = "clien_cedula", unique = true, nullable = false, length = 13)
+    private String cedula;
 
-    public Long getId() {
+    @Column(name = "clien_nombre", length = 100)
+    private String nombre;
+
+    @Column(name = "clien_apellido", length = 100)
+    private String apellido;
+
+    @Column(name = "clien_razon_social", length = 200)
+    private String razonSocial;
+
+    @Column(name = "clien_direccion", length = 255)
+    private String direccion;
+
+    @Column(name = "clien_telefono", length = 20)
+    private String telefono;
+
+    @Column(name = "clien_email", length = 100)
+    private String email;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Factura> facturas;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {
@@ -88,4 +108,11 @@ public class Cliente {
         this.email = email;
     }
 
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
+    }
 }
