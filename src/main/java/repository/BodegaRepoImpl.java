@@ -2,6 +2,7 @@ package repository;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import repository.modelo.Bodega;
@@ -14,9 +15,15 @@ public class BodegaRepoImpl implements IBodegaRepo {
 
     @Override
     public Bodega seleccionarPorCodigo(String codigo) {
-        return this.entityManager.createQuery("SELECT b FROM Bodega b WHERE b.codigo = :codigo", Bodega.class)
-                .setParameter("codigo", codigo)
-                .getSingleResult();
+        try {
+            return this.entityManager.createQuery("SELECT b FROM Bodega b WHERE b.codigo = :codigo", Bodega.class)
+                    .setParameter("codigo", codigo)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null; 
+        } catch (Exception e) {
+            throw new RuntimeException("Error al seleccionar la bodega por código: " + e.getMessage(), e);
+        }
     }
 
     @Override
