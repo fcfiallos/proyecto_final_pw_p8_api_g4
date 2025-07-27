@@ -12,7 +12,6 @@ import service.mapper.ClienteMapper;
 import service.to.ClienteTo;
 
 @ApplicationScoped
-
 public class ClienteServiceImpl implements iClienteService {
     @Inject
     private IClienteRepo clienteRepo;

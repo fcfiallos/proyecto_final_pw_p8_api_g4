@@ -21,7 +21,6 @@ import service.iClienteService;
 import service.to.ClienteTo;
 
 @Path("/clientes")
-
 public class ClienteController {
 
     @Inject
