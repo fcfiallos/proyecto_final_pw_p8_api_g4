@@ -6,12 +6,23 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import repository.modelo.Bodega;
+import java.util.List;
 
 @Transactional
 @ApplicationScoped
 public class BodegaRepoImpl implements IBodegaRepo {
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Override
+    public List<Bodega> seleccionarTodas() {
+        try {
+            return this.entityManager.createQuery("SELECT b FROM Bodega b ORDER BY b.nombre", Bodega.class)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Error al seleccionar todas las bodegas: " + e.getMessage(), e);
+        }
+    }
 
     @Override
     public Bodega seleccionarPorCodigo(String codigo) {

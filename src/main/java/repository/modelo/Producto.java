@@ -1,6 +1,7 @@
 package repository.modelo;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -12,6 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -39,8 +42,13 @@ public class Producto {
     @Column(name = "prod_precio", precision = 10, scale = 2)
     private BigDecimal precio;
 
-    @Column(name = "prod_impuestos")
-    private String impuestos; // JSON string con lista de impuestos
+    @ManyToMany
+    @JoinTable(
+        name = "producto_impuesto",
+        joinColumns = @JoinColumn(name = "prod_id"),
+        inverseJoinColumns = @JoinColumn(name = "imp_id")
+    )
+    private List<Impuesto> impuestos;
 
     @JsonIgnore
     @ManyToOne
@@ -99,11 +107,38 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getImpuestos() {
+    public List<Impuesto> getImpuestos() {
         return impuestos;
     }
 
-    public void setImpuestos(String impuestos) {
+    public void setImpuestos(List<Impuesto> impuestos) {
         this.impuestos = impuestos;
+    }
+
+    public Bodega getBodega() {
+        return bodega;
+    }
+
+    public void setBodega(Bodega bodega) {
+        this.bodega = bodega;
+    }
+    
+    // Método de utilidad para calcular el total de impuestos sobre el precio
+    public BigDecimal calcularTotalImpuestos() {
+        if (impuestos == null || impuestos.isEmpty() || precio == null) {
+            return BigDecimal.ZERO;
+        }
+        
+        return impuestos.stream()
+                .map(impuesto -> impuesto.calcularImpuesto(precio))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    
+    // Método de utilidad para calcular el precio con impuestos incluidos
+    public BigDecimal calcularPrecioConImpuestos() {
+        if (precio == null) {
+            return BigDecimal.ZERO;
+        }
+        return precio.add(calcularTotalImpuestos());
     }
 }

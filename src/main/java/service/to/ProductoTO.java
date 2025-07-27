@@ -10,7 +10,9 @@ public class ProductoTO {
     private CategoriaProducto categoria;
     private Integer stock;
     private BigDecimal precio;
-    private List<String> impuestos;
+    private List<ImpuestoTO> impuestos;
+    private String codigoBodega; // Código de la bodega para el frontend
+    private BodegaTO bodega; // Información completa de la bodega (opcional)
 
     public String getCodigoBarras() {
         return codigoBarras;
@@ -52,11 +54,27 @@ public class ProductoTO {
         this.precio = precio;
     }
 
-    public List<String> getImpuestos() {
+    public List<ImpuestoTO> getImpuestos() {
         return impuestos;
     }
 
-    public void setImpuestos(List<String> impuestos) {
+    public void setImpuestos(List<ImpuestoTO> impuestos) {
         this.impuestos = impuestos;
+    }
+
+    public String getCodigoBodega() {
+        return codigoBodega;
+    }
+
+    public void setCodigoBodega(String codigoBodega) {
+        this.codigoBodega = codigoBodega;
+    }
+
+    public BodegaTO getBodega() {
+        return bodega;
+    }
+
+    public void setBodega(BodegaTO bodega) {
+        this.bodega = bodega;
     }
 }

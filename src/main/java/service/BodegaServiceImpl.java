@@ -6,11 +6,17 @@ import repository.IBodegaRepo;
 import repository.modelo.Bodega;
 import service.mapper.BodegaMapper;
 import service.to.BodegaTO;
+import java.util.List;
 
 @ApplicationScoped
 public class BodegaServiceImpl implements IBodegaService {
     @Inject
     private IBodegaRepo bodegaRepo;
+
+    @Override
+    public List<Bodega> obtenerTodas() {
+        return this.bodegaRepo.seleccionarTodas();
+    }
 
     @Override
     public Bodega buscarPorCodigo(String codigo) {

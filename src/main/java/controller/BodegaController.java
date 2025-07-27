@@ -17,10 +17,24 @@ import service.IBodegaService;
 import service.mapper.BodegaMapper;
 import service.to.BodegaTO;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Path("/bodegas")
 public class BodegaController {
     @Inject
     private IBodegaService bodegaService;
+
+    @GET
+    @Path("")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerTodas() {
+        List<BodegaTO> bodegas = this.bodegaService.obtenerTodas()
+            .stream()
+            .map(BodegaMapper::toTo)
+            .collect(Collectors.toList());
+        return Response.ok(bodegas).build();
+    }
 
     @GET
     @Path("/{codigo}")

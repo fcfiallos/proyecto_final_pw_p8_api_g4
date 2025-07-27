@@ -1,18 +1,17 @@
 package service.mapper;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import repository.modelo.Producto;
 import service.to.ProductoTO;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductoMapper {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public static ProductoTO toTo(Producto producto) {
+        if (producto == null) {
+            return null;
+        }
+        
         ProductoTO productoTO = new ProductoTO();
         productoTO.setCodigoBarras(producto.getCodigoBarras());
         productoTO.setNombre(producto.getNombre());
@@ -20,20 +19,27 @@ public class ProductoMapper {
         productoTO.setStock(producto.getStock());
         productoTO.setPrecio(producto.getPrecio());
         
-        // Convertir JSON string a lista
-        try {
-            if (producto.getImpuestos() != null && !producto.getImpuestos().isEmpty()) {
-                List<String> impuestos = objectMapper.readValue(producto.getImpuestos(), new TypeReference<List<String>>() {});
-                productoTO.setImpuestos(impuestos);
-            }
-        } catch (JsonProcessingException e) {
+        // Convertir lista de impuestos usando ImpuestoMapper
+        if (producto.getImpuestos() != null) {
+            productoTO.setImpuestos(ImpuestoMapper.toTOList(producto.getImpuestos()));
+        } else {
             productoTO.setImpuestos(new ArrayList<>());
+        }
+        
+        // Convertir información de bodega
+        if (producto.getBodega() != null) {
+            productoTO.setCodigoBodega(producto.getBodega().getCodigo());
+            productoTO.setBodega(BodegaMapper.toTo(producto.getBodega()));
         }
         
         return productoTO;
     }
 
     public static Producto toEntity(ProductoTO productoTO) {
+        if (productoTO == null) {
+            return null;
+        }
+        
         Producto producto = new Producto();
         producto.setCodigoBarras(productoTO.getCodigoBarras());
         producto.setNombre(productoTO.getNombre());
@@ -41,15 +47,13 @@ public class ProductoMapper {
         producto.setStock(productoTO.getStock());
         producto.setPrecio(productoTO.getPrecio());
         
-        // Convertir lista a JSON string
-        try {
-            if (productoTO.getImpuestos() != null) {
-                String impuestosJson = objectMapper.writeValueAsString(productoTO.getImpuestos());
-                producto.setImpuestos(impuestosJson);
-            }
-        } catch (JsonProcessingException e) {
-            producto.setImpuestos("[]");
+        // Convertir lista de impuestos usando ImpuestoMapper
+        if (productoTO.getImpuestos() != null) {
+            producto.setImpuestos(ImpuestoMapper.toEntityList(productoTO.getImpuestos()));
         }
+        
+        // NOTA: La bodega se establecerá en el servicio usando el codigoBodega
+        // para evitar inyección de dependencias en el mapper
         
         return producto;
     }
@@ -71,12 +75,8 @@ public class ProductoMapper {
             producto.setCodigoBarras(productoTO.getCodigoBarras());
         }
         if (productoTO.getImpuestos() != null) {
-            try {
-                String impuestosJson = objectMapper.writeValueAsString(productoTO.getImpuestos());
-                producto.setImpuestos(impuestosJson);
-            } catch (JsonProcessingException e) {
-                producto.setImpuestos("[]");
-            }
+            producto.setImpuestos(ImpuestoMapper.toEntityList(productoTO.getImpuestos()));
         }
+        // NOTA: La bodega se actualizará en el servicio usando el codigoBodega
     }
 }
