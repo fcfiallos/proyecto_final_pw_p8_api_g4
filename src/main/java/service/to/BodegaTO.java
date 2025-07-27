@@ -1,10 +1,18 @@
 package service.to;
 
 public class BodegaTO {
+    private Integer id;
     private String codigo;
-
     private String nombre;
     private String ubicacion;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getCodigo() {
         return codigo;

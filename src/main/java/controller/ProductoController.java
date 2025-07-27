@@ -34,6 +34,10 @@ public class ProductoController {
     @Path("")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardar(@RequestBody ProductoTO productoTO) {
+        System.out.println("=== DEBUG CONTROLLER ===");
+        System.out.println("JSON recibido en controller - Código Bodega: '" + productoTO.getCodigoBodega() + "'");
+        System.out.println("========================");
+        
         this.productoService.guardar(productoTO);
         return Response.status(Response.Status.CREATED).build();
     }
