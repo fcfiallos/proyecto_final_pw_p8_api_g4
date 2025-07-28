@@ -82,7 +82,8 @@ public class ClienteController {
     }
 
     @GET
-    @Path("/{cedula}/facturas") 
+    @Path("/{cedula}/facturas")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response buscarFacturasDeCliente(@PathParam("cedula") String cedula) {
         List<FacturaResumenTO> facturas = this.clienteService.buscarFacturasPorCedula(cedula);
         return Response.ok(facturas).build();
