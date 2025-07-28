@@ -51,7 +51,7 @@ public class ClienteController {
     }
 
     @GET
-    @Path("/buscar")
+    @Path("/{nombre}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response buscarClientesPorNombre(@QueryParam("nombre") String nombre) {
         List<ClienteTo> clientes = this.clienteService.buscarPorNombreCliente(nombre);

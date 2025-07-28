@@ -37,5 +37,5 @@ public class DetalleFacturaController {
         this.detalleFacturaService.crearDetalle(detalleFacturaTO);
         return Response.status(Response.Status.CREATED).entity("Detalle creado exitosamente.").build();
     }
-
+    
 }

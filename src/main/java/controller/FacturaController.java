@@ -34,4 +34,11 @@ public class FacturaController {
         return Response.status(Response.Status.CREATED).entity("Factura creada exitosamente.").build();
     }
 
+    @GET
+    @Path("/reporte")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerReporteFacturas() {
+        return Response.ok(this.facturaService.obtenerReporteFacturas()).build();
+    }
+    
 }
