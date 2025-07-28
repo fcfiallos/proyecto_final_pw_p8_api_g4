@@ -14,7 +14,9 @@ public class ProductoRepoImpl implements IProductoRepo {
 
     @Override
     public Producto seleccionarPorCodigoBarras(String codigoBarras) {
-        return this.entityManager.createQuery("SELECT p FROM Producto p WHERE p.codigoBarras = :codigoBarras", Producto.class)
+        return this.entityManager.createQuery(
+                "SELECT p FROM Producto p LEFT JOIN FETCH p.impuestos WHERE p.codigoBarras = :codigoBarras",
+                Producto.class)
                 .setParameter("codigoBarras", codigoBarras)
                 .getSingleResult();
     }

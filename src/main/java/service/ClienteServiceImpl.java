@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -8,8 +9,11 @@ import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 import repository.IClienteRepo;
 import repository.modelo.Cliente;
+import repository.modelo.Factura;
 import service.mapper.ClienteMapper;
+import service.mapper.FacturaResumenMapper;
 import service.to.ClienteTo;
+import service.to.FacturaResumenTO;
 
 @ApplicationScoped
 public class ClienteServiceImpl implements iClienteService {
@@ -66,6 +70,23 @@ public class ClienteServiceImpl implements iClienteService {
             throw new NotFoundException("Imposible eliminar. No se encontró cliente con cédula: " + cedula);
         }
         this.clienteRepo.eliminar(clienteAEliminar);
+    }
+
+    @Override
+    public List<FacturaResumenTO> buscarFacturasPorCedula(String cedula) {
+
+        Cliente cliente = this.clienteRepo.buscarPorCedula(cedula);
+        if (cliente == null) {
+            throw new NotFoundException("No se encontró ningún cliente con la cédula: " + cedula);
+        }
+
+        List<Factura> facturas = this.clienteRepo.buscarFacturasPorCedulaCliente(cedula);
+
+        List<FacturaResumenTO> facturasTO = facturas.stream()
+                .map(factura -> FacturaResumenMapper.toTO(factura))
+                .collect(Collectors.toList());
+
+        return facturasTO;
     }
 
 }
