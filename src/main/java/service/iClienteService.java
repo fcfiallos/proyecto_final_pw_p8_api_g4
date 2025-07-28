@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import service.to.ClienteTo;
+import service.to.FacturaResumenTO;
 
 public interface iClienteService {
     void crearCliente(ClienteTo clienteTo);
@@ -16,5 +17,7 @@ public interface iClienteService {
     void actualizarCliente(ClienteTo clienteTo);
 
     void eliminarPorCedula(String cedula);
+
+    List<FacturaResumenTO> buscarFacturasPorCedula(String cedula);
 
 }

@@ -19,6 +19,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import service.iClienteService;
 import service.to.ClienteTo;
+import service.to.FacturaResumenTO;
 
 @Path("/clientes")
 public class ClienteController {
@@ -78,6 +79,13 @@ public class ClienteController {
     public Response eliminarCliente(@PathParam("cedula") String cedula) {
         this.clienteService.eliminarPorCedula(cedula);
         return Response.ok("Cliente eliminado exitosamente.").build();
+    }
+
+    @GET
+    @Path("/{cedula}/facturas") 
+    public Response buscarFacturasDeCliente(@PathParam("cedula") String cedula) {
+        List<FacturaResumenTO> facturas = this.clienteService.buscarFacturasPorCedula(cedula);
+        return Response.ok(facturas).build();
     }
 
 }

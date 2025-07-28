@@ -10,6 +10,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import repository.modelo.Cliente;
+import repository.modelo.Factura;
 
 @ApplicationScoped
 @Transactional
@@ -62,10 +63,24 @@ public class ClienteRepoImpl implements IClienteRepo {
 
     @Override
     public void eliminar(Cliente cliente) {
-         if (!this.entityManager.contains(cliente)) {
+        if (!this.entityManager.contains(cliente)) {
             cliente = this.entityManager.merge(cliente);
 
         }
         this.entityManager.remove(cliente);
+    }
+
+    @Override
+    public List<Factura> buscarFacturasPorCedulaCliente(String cedula) {
+
+        try {
+            TypedQuery<Factura> query = this.entityManager.createQuery(
+                    "SELECT f FROM Cliente c JOIN c.facturas f WHERE c.cedula = :cedula ORDER BY f.fechaEmision DESC",
+                    Factura.class);
+            query.setParameter("cedula", cedula);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return Collections.emptyList();
+        }
     }
 }
