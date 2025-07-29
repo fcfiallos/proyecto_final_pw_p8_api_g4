@@ -38,6 +38,15 @@ public class BodegaRepoImpl implements IBodegaRepo {
     }
 
     @Override
+    public Bodega seleccionarPorId(Integer id) {
+        try {
+            return this.entityManager.find(Bodega.class, id);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al seleccionar la bodega por ID: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
     public void insertar(Bodega bodega) {
         this.entityManager.persist(bodega);
     }
