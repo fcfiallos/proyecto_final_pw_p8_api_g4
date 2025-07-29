@@ -5,7 +5,9 @@ import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import repository.IFacturaRepo;
+import repository.modelo.Factura;
 import service.mapper.FacturaMapper;
+import service.mapper.ReporteFacturaMapper;
 import service.to.FacturaTO;
 import service.to.FacturaReporteTO;
 
@@ -29,16 +31,13 @@ public class FacturaServiceImpl implements IFacturaService {
 
     @Override
     public List<FacturaReporteTO> obtenerReporteFacturas() {
-        return this.facturaRepo.obtenerFacturas().stream().map(f -> {
-            FacturaReporteTO reporte = new FacturaReporteTO();
-            reporte.setNumeroDocumento(f.getNumeroDocumento());
-            reporte.setIdentificacionCliente(f.getCliente().getCedula());
-            reporte.setNombreCliente(f.getCliente().getNombre() + " " + f.getCliente().getApellido());
-            reporte.setCantidadItems(f.getDetalles().size());
-            reporte.setTotalImpuestos(f.getTotalImpuestos());
-            reporte.setTotal(f.getTotal());
-            return reporte;
-        }).toList();
+        return ReporteFacturaMapper.toTO(this.facturaRepo.obtenerFacturas());
+    }
+
+    @Override
+    public List<FacturaReporteTO> obtenerReporteFacturasPorCedula(String cedula) {
+        List<Factura> facturas = facturaRepo.obtenerFacturasPorCedulaCliente(cedula);
+        return ReporteFacturaMapper.toTO(facturas);
     }
 
 }

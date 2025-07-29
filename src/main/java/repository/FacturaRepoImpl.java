@@ -28,4 +28,17 @@ public class FacturaRepoImpl implements IFacturaRepo {
                 Factura.class);
         return query.getResultList();
     }
+
+    @Override
+    public List<Factura> obtenerFacturasPorCedulaCliente(String cedula) {
+        TypedQuery<Factura> query = this.entityManager.createQuery(
+                "SELECT f FROM Factura f " +
+                        "LEFT JOIN FETCH f.detalles d " +
+                        "LEFT JOIN FETCH d.producto " +
+                        "WHERE f.cliente.cedula = :cedula",
+                Factura.class);
+        query.setParameter("cedula", cedula);
+        return query.getResultList();
+    }
+
 }

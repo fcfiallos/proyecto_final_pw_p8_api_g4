@@ -40,5 +40,12 @@ public class FacturaController {
     public Response obtenerReporteFacturas() {
         return Response.ok(this.facturaService.obtenerReporteFacturas()).build();
     }
-    
+
+    @GET
+    @Path("/reporte/cliente/{cedula}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerReportePorCliente(@jakarta.ws.rs.PathParam("cedula") String cedula) {
+        return Response.ok(this.facturaService.obtenerReporteFacturasPorCedula(cedula)).build();
+    }
+
 }

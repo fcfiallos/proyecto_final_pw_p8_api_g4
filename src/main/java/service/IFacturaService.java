@@ -12,6 +12,8 @@ public interface IFacturaService {
     List<FacturaTO> listarFacturas();
 
     List<FacturaReporteTO> obtenerReporteFacturas();
+    
+    List<FacturaReporteTO> obtenerReporteFacturasPorCedula(String cedula);
 
 
 }
