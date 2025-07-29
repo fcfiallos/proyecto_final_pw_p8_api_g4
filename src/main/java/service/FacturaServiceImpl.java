@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import repository.IClienteRepo;
 import repository.IFacturaRepo;
 import repository.modelo.Factura;
 import service.mapper.FacturaMapper;
@@ -17,10 +18,23 @@ public class FacturaServiceImpl implements IFacturaService {
     @Inject
     private IFacturaRepo facturaRepo;
 
+    @Inject
+    private IClienteRepo clienteRepo;
+
     @Override
     public void crearFactura(FacturaTO facturaTO) {
         if (facturaTO != null) {
-            this.facturaRepo.insertar(FacturaMapper.toEntity(facturaTO));
+            Factura factura = FacturaMapper.toEntity(facturaTO);
+            if (facturaTO.getCedulaCliente() != null) {
+                var cliente = clienteRepo.buscarPorCedula(facturaTO.getCedulaCliente());
+                if (cliente == null) {
+                    throw new RuntimeException("Cliente no existe");
+                }
+                factura.setCliente(cliente);
+            } else {
+                throw new RuntimeException("Debe especificar el cliente");
+            }
+            this.facturaRepo.insertar(factura);
         }
     }
 

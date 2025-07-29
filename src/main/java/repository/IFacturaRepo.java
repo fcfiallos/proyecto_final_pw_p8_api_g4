@@ -12,4 +12,6 @@ public interface IFacturaRepo {
     
     List<Factura> obtenerFacturasPorCedulaCliente(String cedula);
 
+    Factura obtenerFacturaPorID(Integer id);
+
 }

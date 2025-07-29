@@ -41,4 +41,17 @@ public class FacturaRepoImpl implements IFacturaRepo {
         return query.getResultList();
     }
 
+    @Override
+    public Factura obtenerFacturaPorID(Integer id) {
+        TypedQuery<Factura> query = this.entityManager.createQuery(
+                "SELECT f FROM Factura f LEFT JOIN FETCH f.detalles d LEFT JOIN FETCH d.producto WHERE f.id = :id",
+                Factura.class);
+        query.setParameter("id", id);
+        List<Factura> result = query.getResultList();
+        return result.isEmpty() ? null : result.get(0);
+    }
+
+    
+
+
 }

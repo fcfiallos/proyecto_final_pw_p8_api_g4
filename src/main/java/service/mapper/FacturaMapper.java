@@ -21,10 +21,7 @@ public class FacturaMapper {
         dto.setEstablecimiento(factura.getEstablecimiento());
         dto.setPuntoEmision(factura.getPuntoEmision());
         dto.setFechaEmision(factura.getFechaEmision());
-        dto.setCliente(factura.getCliente() != null ? ClienteMapper.toTO(factura.getCliente()) : null);
-        dto.setDetalles(factura.getDetalles() != null
-                ? DetalleFacturaMapper.toTO(factura.getDetalles())
-                : Collections.emptyList());
+        dto.setCedulaCliente(factura.getCliente() != null ? factura.getCliente().getCedula() : null);
         dto.setSubtotal(factura.getSubtotal());
         dto.setTotalImpuestos(factura.getTotalImpuestos());
         dto.setTotal(factura.getTotal());
@@ -38,7 +35,6 @@ public class FacturaMapper {
         }
 
         Factura factura = new Factura();
-        factura.setId(facturaTO.getId());
         factura.setRucEmpresa(facturaTO.getRucEmpresa());
         factura.setNumeroDocumento(facturaTO.getNumeroDocumento());
         factura.setEstablecimiento(facturaTO.getEstablecimiento());

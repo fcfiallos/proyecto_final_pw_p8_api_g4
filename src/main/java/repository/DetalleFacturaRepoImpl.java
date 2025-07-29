@@ -26,7 +26,7 @@ public class DetalleFacturaRepoImpl implements IDetalleFacturaRepo {
     public List<DetalleFactura> obtenerDetallePorIdFactura(Integer id) {
         try {
             TypedQuery<DetalleFactura> query = entityManager.createQuery(
-                    "SELECT d FROM DetalleFactura d WHERE d.factura.id = :id", DetalleFactura.class);
+                    "SELECT d FROM DetalleFactura d JOIN FETCH d.factura WHERE d.factura.id = :id", DetalleFactura.class);
             query.setParameter("id", id);
             return query.getResultList();
         } catch (NoResultException e) {

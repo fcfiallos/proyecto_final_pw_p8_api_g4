@@ -12,6 +12,7 @@ public class DetalleFacturaTO {
     private BigDecimal precio;
     private BigDecimal subtotal;
     private BigDecimal totalImpuestos;
+    private Integer facturaId;
 
     public Integer getId() {
         return id;
@@ -60,5 +61,13 @@ public class DetalleFacturaTO {
     }
     public void setTotalImpuestos(BigDecimal totalImpuestos) {
         this.totalImpuestos = totalImpuestos;
+    }
+
+    public Integer getFacturaId() {
+        return facturaId;
+    }
+
+    public void setFacturaId(Integer facturaId) {
+        this.facturaId = facturaId;
     }
 }

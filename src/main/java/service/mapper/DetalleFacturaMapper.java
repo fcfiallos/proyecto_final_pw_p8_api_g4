@@ -23,6 +23,7 @@ public class DetalleFacturaMapper {
         dto.setPrecio(detalle.getPrecio());
         dto.setSubtotal(detalle.getSubtotal());
         dto.setTotalImpuestos(detalle.getTotalImpuestos());
+        dto.setFacturaId(detalle.getFactura() != null ? detalle.getFactura().getId() : null);
 
         return dto;
     }
@@ -43,7 +44,6 @@ public class DetalleFacturaMapper {
         }
 
         DetalleFactura detalle = new DetalleFactura();
-        detalle.setId(detalleTO.getId());
         detalle.setCantidad(detalleTO.getCantidad());
         detalle.setPrecio(detalleTO.getPrecio());
         detalle.setSubtotal(detalleTO.getSubtotal());
