@@ -42,8 +42,10 @@ public class FacturaController {
     @Path("")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardarFactura(@RequestBody FacturaTO facturaTo, @Context UriInfo uriInfo) {
-        this.facturaService.crearFactura(facturaTo);
-        return Response.status(Response.Status.CREATED).entity("Factura creada exitosamente.").build();
+        Integer idFactura = this.facturaService.crearFactura(facturaTo);
+        return Response.status(Response.Status.CREATED)
+                .entity(idFactura)
+                .build();
     }
 
     @GET

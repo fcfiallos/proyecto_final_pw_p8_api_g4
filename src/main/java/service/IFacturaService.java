@@ -7,7 +7,7 @@ import service.to.FacturaTO;
 
 public interface IFacturaService {
 
-    void crearFactura(FacturaTO facturaTO);
+    Integer crearFactura(FacturaTO facturaTO);
 
     List<FacturaTO> listarFacturas();
 

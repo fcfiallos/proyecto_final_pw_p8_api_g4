@@ -30,14 +30,12 @@ public class DetalleFacturaServiceImpl implements IDetalleFacturaService {
         if (detalleFactura != null) {
             DetalleFactura detalle = DetalleFacturaMapper.toEntity(detalleFactura);
 
-            // Buscar producto por código de barras
             Producto producto = productoRepo.seleccionarPorCodigoBarras(detalleFactura.getCodigoBarras());
             if (producto == null) {
                 throw new RuntimeException("Producto no existe");
             }
             detalle.setProducto(producto);
 
-            // Buscar factura por ID (debes tener facturaId en tu DetalleFacturaTO)
             Factura factura = this.facturaRepo.obtenerFacturaPorID(detalleFactura.getFacturaId());
             if (factura == null) {
                 throw new RuntimeException("Factura no existe");

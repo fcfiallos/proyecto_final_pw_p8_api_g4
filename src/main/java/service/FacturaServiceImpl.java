@@ -22,7 +22,7 @@ public class FacturaServiceImpl implements IFacturaService {
     private IClienteRepo clienteRepo;
 
     @Override
-    public void crearFactura(FacturaTO facturaTO) {
+    public Integer crearFactura(FacturaTO facturaTO) {
         if (facturaTO != null) {
             Factura factura = FacturaMapper.toEntity(facturaTO);
             if (facturaTO.getCedulaCliente() != null) {
@@ -35,7 +35,9 @@ public class FacturaServiceImpl implements IFacturaService {
                 throw new RuntimeException("Debe especificar el cliente");
             }
             this.facturaRepo.insertar(factura);
+            return factura.getId();
         }
+        return null;
     }
 
     @Override
