@@ -2,7 +2,7 @@ package service.to;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+//Este es Jordi, ta mal, no tocar :c 
 public class FacturaResumenTO {
     private String numeroDocumento;
     private LocalDate fechaEmision;

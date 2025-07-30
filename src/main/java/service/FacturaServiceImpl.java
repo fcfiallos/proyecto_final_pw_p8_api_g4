@@ -4,13 +4,14 @@ import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import repository.IClienteRepo;
 import repository.IFacturaRepo;
 import repository.modelo.Factura;
 import service.mapper.FacturaMapper;
 import service.mapper.ReporteFacturaMapper;
-import service.to.FacturaTO;
 import service.to.FacturaReporteTO;
+import service.to.FacturaTO;
 
 @ApplicationScoped
 public class FacturaServiceImpl implements IFacturaService {
@@ -22,6 +23,7 @@ public class FacturaServiceImpl implements IFacturaService {
     private IClienteRepo clienteRepo;
 
     @Override
+    @Transactional
     public Integer crearFactura(FacturaTO facturaTO) {
         if (facturaTO != null) {
             Factura factura = FacturaMapper.toEntity(facturaTO);
