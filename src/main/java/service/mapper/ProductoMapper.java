@@ -1,9 +1,9 @@
 package service.mapper;
 
+import java.util.ArrayList;
+
 import repository.modelo.Producto;
 import service.to.ProductoTO;
-
-import java.util.ArrayList;
 
 public class ProductoMapper {
 
@@ -19,14 +19,13 @@ public class ProductoMapper {
         productoTO.setStock(producto.getStock());
         productoTO.setPrecio(producto.getPrecio());
         
-        // Convertir lista de impuestos usando ImpuestoMapper
         if (producto.getImpuestos() != null) {
             productoTO.setImpuestos(ImpuestoMapper.toTOList(producto.getImpuestos()));
         } else {
             productoTO.setImpuestos(new ArrayList<>());
         }
         
-        // Convertir información de bodega
+
         if (producto.getBodega() != null) {
             productoTO.setCodigoBodega(producto.getBodega().getCodigo());
             productoTO.setBodega(BodegaMapper.toTo(producto.getBodega()));
@@ -47,13 +46,11 @@ public class ProductoMapper {
         producto.setStock(productoTO.getStock());
         producto.setPrecio(productoTO.getPrecio());
         
-        // Convertir lista de impuestos usando ImpuestoMapper
+       
         if (productoTO.getImpuestos() != null) {
             producto.setImpuestos(ImpuestoMapper.toEntityList(productoTO.getImpuestos()));
         }
-        
-        // NOTA: La bodega se establecerá en el servicio usando el codigoBodega
-        // para evitar inyección de dependencias en el mapper
+       
         
         return producto;
     }
@@ -77,6 +74,5 @@ public class ProductoMapper {
         if (productoTO.getImpuestos() != null) {
             producto.setImpuestos(ImpuestoMapper.toEntityList(productoTO.getImpuestos()));
         }
-        // NOTA: La bodega se actualizará en el servicio usando el codigoBodega
     }
 }

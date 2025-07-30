@@ -40,6 +40,6 @@ public class BodegaMapper {
         if (bodegaTO.getCodigo() != null) {
             bodega.setCodigo(bodegaTO.getCodigo());
         }
-        // Nota: No actualizamos el ID porque es generado automáticamente
+     
     }
 }

@@ -30,7 +30,7 @@ public class DetalleFacturaRepoImpl implements IDetalleFacturaRepo {
             query.setParameter("id", id);
             return query.getResultList();
         } catch (NoResultException e) {
-            return List.of(); // Devuelve una lista vacía en lugar de null
+            return List.of(); 
         }
     }
 }

@@ -1,8 +1,9 @@
 package service.to;
 
-import repository.modelo.Producto.CategoriaProducto;
 import java.math.BigDecimal;
 import java.util.List;
+
+import repository.modelo.Producto.CategoriaProducto;
 
 public class ProductoTO {
     private String codigoBarras;
@@ -11,8 +12,8 @@ public class ProductoTO {
     private Integer stock;
     private BigDecimal precio;
     private List<ImpuestoTO> impuestos;
-    private String codigoBodega; // Código de la bodega para el frontend
-    private BodegaTO bodega; // Información completa de la bodega (opcional)
+    private String codigoBodega; 
+    private BodegaTO bodega; 
 
     public String getCodigoBarras() {
         return codigoBarras;
