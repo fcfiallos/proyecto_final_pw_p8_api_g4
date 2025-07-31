@@ -58,7 +58,6 @@ public class ImpuestoController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response guardar(@RequestBody ImpuestoTO impuestoTO) {
-        // Verificar si ya existe un impuesto con el mismo nombre
         if (this.impuestoService.existePorNombre(impuestoTO.getNombre())) {
             return Response.status(Response.Status.CONFLICT)
                     .entity("Ya existe un impuesto con el nombre: " + impuestoTO.getNombre())
@@ -78,7 +77,6 @@ public class ImpuestoController {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         
-        // Verificar si el nuevo nombre ya existe (excluyendo el impuesto actual)
         if (impuestoTO.getNombre() != null && 
             !impuestoTO.getNombre().equals(impuestoExistente.getNombre()) &&
             this.impuestoService.existePorNombre(impuestoTO.getNombre())) {
